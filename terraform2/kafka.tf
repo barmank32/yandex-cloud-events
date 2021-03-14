@@ -1,9 +1,9 @@
 
 resource "yandex_compute_instance" "kafka" {
-  name        = "kafka"
-  zone        = "ru-central1-a"
-  hostname    = "kafka"
-  platform_id = "standard-v2"
+  name               = "kafka"
+  zone               = "ru-central1-a"
+  hostname           = "kafka"
+  platform_id        = "standard-v2"
   service_account_id = yandex_iam_service_account.instances.id
 
   resources {
@@ -35,7 +35,7 @@ resource "yandex_compute_instance" "kafka" {
     # путь до приватного ключа
     private_key = file(var.privat_key_path)
   }
-  
+
   # remote-exec will wait for ssh up and running, after that local-exec will come into play
   # XXX By default requires SSH agent to be running
   provisioner "remote-exec" {
@@ -53,4 +53,8 @@ resource "yandex_compute_instance" "kafka" {
     }
     command = "ansible-playbook -u ubuntu -i '${self.network_interface.0.nat_ip_address},' --private-key ${var.privat_key_path} kafka.yml "
   }
+
+  depends_on = [
+    yandex_iam_service_account.instances
+  ]
 }
