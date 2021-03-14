@@ -1,6 +1,6 @@
-132 json
+131 json
 POST /post HTTP/1.1
-Host: events.kis.im
+Host: hostname.com
 User-Agent: tank
 Accept: */*
 Connection: Close

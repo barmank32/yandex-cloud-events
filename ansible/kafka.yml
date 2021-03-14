@@ -7,10 +7,16 @@
       apt:
         cache_valid_time: 1800
         update_cache: yes
+      tags:
+        - build
 
   roles:
     - name: sansible.zookeeper
+      tags:
+       - zookeeper
     - name: sansible.kafka
+      tags:
+        - kafka
 
   vars:
     sansible_kafka_server_properties:

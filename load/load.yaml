@@ -3,10 +3,11 @@ overload:
   package: yandextank.plugins.DataUploader
   token_file: "token.txt"
 phantom:
-  address: events.kis.im
+  address: '84.201.150.59'
   load_profile:
     load_type: rps
-    schedule: const(15000, 3m)
+    schedule: const(5000, 3m)
+
 console:
   enabled: true
 telegraf:

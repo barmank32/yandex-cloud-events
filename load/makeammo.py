@@ -45,7 +45,7 @@ def main():
 
         method, url, case = method.strip(), url.strip(), case.strip()
 
-        headers = "Host: events.kis.im\r\n" + \
+        headers = "Host: hostname.com\r\n" + \
             "User-Agent: tank\r\n" + \
             "Accept: */*\r\n" + \
             "Connection: Close"
