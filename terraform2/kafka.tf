@@ -4,6 +4,7 @@ resource "yandex_compute_instance" "kafka" {
   zone        = "ru-central1-a"
   hostname    = "kafka"
   platform_id = "standard-v2"
+  service_account_id = yandex_iam_service_account.instances.id
 
   resources {
     cores  = 2
@@ -19,7 +20,7 @@ resource "yandex_compute_instance" "kafka" {
 
   network_interface {
     subnet_id = yandex_vpc_subnet.internal-a.id
-    nat       = true
+    # nat       = true
   }
 
   metadata = {

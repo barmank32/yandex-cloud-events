@@ -27,7 +27,7 @@ ansible 2.9.4
 
 - yandex tank:
 ```sh
-# docker run -v /home/cloud-user/load/:/var/loadtest/ --net host -it direvius/yandex-tank --version
+# docker run -v /home/cloud-user/load/:/var/loadtest/ --network host -it direvius/yandex-tank --version
 No handlers could be found for logger "netort.resource"
 YandexTank/1.12.1
 ```

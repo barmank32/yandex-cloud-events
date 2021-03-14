@@ -8,9 +8,10 @@ resource "yandex_compute_instance_group" "events_api_ig" {
 
   instance_template {
     platform_id = "standard-v2"
+    # name = "events_api-{instance.index}"
     resources {
-      memory        = 2
-      cores         = 2
+      memory = 2
+      cores  = 2
       # core_fraction = 5
     }
     boot_disk {
@@ -23,14 +24,16 @@ resource "yandex_compute_instance_group" "events_api_ig" {
     network_interface {
       network_id = yandex_vpc_network.internal.id
       subnet_ids = [yandex_vpc_subnet.internal-a.id, yandex_vpc_subnet.internal-b.id, yandex_vpc_subnet.internal-c.id]
-      nat        = true
+      # nat        = true
     }
 
     metadata = {
       docker-container-declaration = file("spec.yml")
       ssh-keys                     = "ubuntu:${file(var.public_key_path)}"
     }
+
     service_account_id = yandex_iam_service_account.docker.id
+
     scheduling_policy {
       preemptible = true
     }
@@ -47,11 +50,6 @@ resource "yandex_compute_instance_group" "events_api_ig" {
       stabilization_duration = 180
     }
   }
-  # scale_policy {
-  #   fixed_scale {
-  #     size = 3
-  #   }
-  # }
 
   allocation_policy {
     zones = ["ru-central1-a", "ru-central1-b", "ru-central1-c"]
@@ -67,4 +65,9 @@ resource "yandex_compute_instance_group" "events_api_ig" {
   load_balancer {
     target_group_name = "events-api-tg"
   }
+
+  depends_on = [
+    yandex_iam_service_account.instances,
+    yandex_iam_service_account.docker
+  ]
 }
